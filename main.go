@@ -5,9 +5,7 @@ import (
 	"fmt"
 	"log"
 	"math"
-	_ "os"
 	"os/exec"
-	_ "reflect"
 	"regexp"
 	"strconv"
 	"strings"
@@ -18,8 +16,8 @@ var TIME = 20
 func main() {
 
 	// generate csv file
-	fmt.Print(fmt.Sprintf("GENERATE POWERTOP REPORT IN %v SECONDES\n",TIME))
-	_, err := exec.Command("sudo", "powertop", "--csv",fmt.Sprintf("--time=%v",TIME)).Output()
+	fmt.Print(fmt.Sprintf("GENERATE POWERTOP REPORT IN %v SECONDES\n", TIME))
+	_, err := exec.Command("sudo", "powertop", "--csv", fmt.Sprintf("--time=%v", TIME)).Output()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -44,14 +42,14 @@ func main() {
 		}
 		//fmt.Println(line)
 		fields := map[string]interface{}{
-			"Usage(um/s)": findAndConvertPrefix(line[0])*math.Pow10(6),
-			"Wakeups/s":   findAndConvertPrefix(line[1]),
-			"GPU_ops/s": line[2],
-			"Disk_Io/s": line[3],
+			"Usage(um/s)":   findAndConvertPrefix(line[0]) * math.Pow10(6),
+			"Wakeups/s":     findAndConvertPrefix(line[1]),
+			"GPU_ops/s":     line[2],
+			"Disk_Io/s":     line[3],
 			"GFX_wakeups/s": line[4],
-			"Category": line[5],
-			"Description": line[6],
-			"Power(mW)": findAndConvertPrefix(line[7])*math.Pow10(3),
+			"Category":      line[5],
+			"Description":   line[6],
+			"Power(mW)":     findAndConvertPrefix(line[7]) * math.Pow10(3),
 		}
 		fmt.Println(fields)
 	}
